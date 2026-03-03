@@ -265,7 +265,7 @@ python seed_timetable.py
 - Register via `POST /api/auth/register` or through the UI login page
 
 **Student data:**
-- 250 students with Hindu names across 8 departments
+- 250 students names across 8 departments
 - 4 weeks of historical attendance (65–98% attendance rate per student)
 - 30% of records marked by AI with confidence scores
 
