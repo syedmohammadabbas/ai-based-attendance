@@ -81,6 +81,27 @@ class AttendanceMark(BaseModel):
     marked_by: Optional[str] = Field(default="manual", pattern="^(manual|ai)$")
 
 
+# --- Timetable Schemas ---
+class TimetableSlotCreate(BaseModel):
+    subject_id: int
+    day_of_week: int = Field(..., ge=0, le=5)   # 0=Mon … 5=Sat
+    start_time: str = Field(..., pattern=r"^\d{2}:\d{2}$")
+    end_time:   str = Field(..., pattern=r"^\d{2}:\d{2}$")
+    room: Optional[str] = None
+
+
+class TimetableSlotResponse(BaseModel):
+    id: int
+    subject_id: int
+    subject_name: str
+    faculty_name: str
+    semester: str
+    day_of_week: int
+    start_time: str
+    end_time: str
+    room: Optional[str]
+
+
 # --- Generic Response ---
 class MessageResponse(BaseModel):
     success: bool

@@ -59,7 +59,7 @@ async def get_students(
     department: Optional[str] = None,
     search: Optional[str] = None,
     page: int = Query(1, ge=1),
-    limit: int = Query(20, ge=1, le=100),
+    limit: int = Query(20, ge=1, le=500),
 ):
     query = select(Student).filter(Student.is_active == True)
     

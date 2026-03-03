@@ -7,20 +7,25 @@ from app.routes.auth import router as auth_router
 from app.routes.students import router as students_router
 from app.routes.subjects import router as subjects_router
 from app.routes.attendance import router as attendance_router
+from app.routes.face import router as face_router
+from app.routes.timetable import router as timetable_router
+from app.services.scheduler import start_scheduler, stop_scheduler
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: construct DB tables via SQLAlchemy Base class
+    # Startup
     await connect_db()
+    start_scheduler()
     yield
     # Shutdown
+    stop_scheduler()
     await close_db()
 
 
 app = FastAPI(
     title="AI-Based Attendance Management System",
-    description="Backend API for attendance management with future AI/face recognition integration (using PostgreSQL + SQLAlchemy)",
+    description="Backend API for attendance management with AI/face recognition integration (using PostgreSQL + SQLAlchemy)",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -39,6 +44,8 @@ app.include_router(auth_router)
 app.include_router(students_router)
 app.include_router(subjects_router)
 app.include_router(attendance_router)
+app.include_router(face_router)
+app.include_router(timetable_router)
 
 
 @app.get("/health", tags=["Health"])
